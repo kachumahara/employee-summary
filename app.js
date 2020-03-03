@@ -27,7 +27,7 @@ const render = require("./lib/htmlRenderer");
 // for the provided `render` function to work!```
 
 const html = render([
-    new Manager("Michael", 1, "michael@micharl.com", 214),
+    new Manager("Michael", 1, "michael@michael.com", 214),
     new Engineer("Kenneth", 3, "kachumahara@gmail.com", "kachumahara"),
     new Intern("Trevor", "trevor@trevor.com", "UA")
 ])
