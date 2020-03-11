@@ -4,11 +4,132 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const OUTPUT_DIR = path.resolve(__dirname, "output")
+const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
+const teamMembers = [];
 // Write code to use inquirer to gather information about the development team members,
+function initialPrompt() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: " What type of team would like to add?",
+        name: "profession",
+        choices: ["manager", "engineer", "intern", "exit application"]
+      }
+    ])
+    // and to create objects for each team member (using the correct classes as blueprints!)
+    .then(function(response) {
+      switch (response.profession) {
+        case "manager":
+          addManager();
+          break;
+        case "engineer":
+          addEngineer();
+          break;
+        case "intern":
+          addIntern();
+          break;
+        default:
+          exitApplication();
+      }
+    });
+};
 // and to create objects for each team member (using the correct classes as blueprints!)
+initialPrompt();
+function addManager() {
+    inquirer
+    .prompt([
+        {
+        type: "input",
+        message: "Enter your name",
+        name: "name"
+    },
+    {
+      type: "input",
+      message: "Enter your id?",
+      name: "id"
+
+    },
+    {
+       type: "input",
+       message: " Enter your office number",
+       name: "officeId"
+    },
+    {
+      type: "input",
+      message: "Enter your email",
+      name: "email"      
+    },    
+])
+.then(function(res){
+  var manager = new Manager(res.name, res.id, res.officeId, res.email);
+  teamMembers.push(manager);
+  initialPrompt();
+})
+}
+function addEngineer(){
+  inquirer
+  .prompt([
+  {
+    type: "input",
+    message: "Enter your name",
+    name: "name"
+  },
+  {
+    type: "input",
+    message: "Enter your id",
+    name: "id"
+  },
+  {
+    type: "input",
+    message: "Enter your email",
+    name: "email"
+  },
+{
+  type: "input",
+  message: "Enter your github username",
+  name: "githubUsername"
+},
+])
+.then(function(res){
+  var engineer = new Engineer(res.name, res.id, res.email, res.githubUsername);
+  teamMembers.push(engineer);
+  initialPrompt();
+})
+}
+function addIntern(){
+  inquirer
+  .prompt([
+    {
+      type: "input",
+      message: "Enter your name",
+      name: "name"
+    },
+    {
+      type: "input",
+      message: "Enter your id",
+      name: "id"
+    },
+    {
+      type: "input",
+      message: "Enter your email",
+      name: "email"
+    },
+    {
+      type: "input",
+      message: "Name of your school",
+      name: "schoolName"
+    },
+])
+.then(function(res){
+  var intern = new Intern(res.name, res.id, res.email, res.schoolName);
+  teamMembers.push(intern);
+  initialPrompt();
+})
+}
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
@@ -22,14 +143,16 @@ const render = require("./lib/htmlRenderer");
 // employee type.
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
+// for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work!```
 
-const html = render([
-    new Manager("Michael", 1, "michael@michael.com", 214),
-    new Engineer("Kenneth", 3, "kachumahara@gmail.com", "kachumahara"),
-    new Intern("Trevor", "trevor@trevor.com", "UA")
-])
-console.log(html)
-fs.writeFile(outputPath, html, () => {});
+function exitApplication() {
+  var page = render(teamMembers);
+  fs.writeFile(outputPath, page, (err) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Success")
+  });
+}
