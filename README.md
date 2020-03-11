@@ -10,6 +10,13 @@ I first installed npm, then ran npm run test to determine if the test passed on 
 On the app.js folder, I coded all the functions and created output and team html. I console.log to create the html file.
 
 ## Below is the solution: 
-![Cli](https://user-images.githubusercontent.com/42631863/75797064-d1088a80-5d31-11ea-9c57-3f3e287925e4.jpg)
+
+
+![teamMembers](https://user-images.githubusercontent.com/42631863/76387076-4c1a0400-6323-11ea-8578-f29226feab16.gif)
+
+![teamM](https://user-images.githubusercontent.com/42631863/76387089-51774e80-6323-11ea-8b77-918249211a78.jpg)
+
+
+
 
 link: https://kachumahara.github.io/employee-summary/
